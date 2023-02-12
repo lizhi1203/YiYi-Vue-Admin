@@ -34,7 +34,7 @@ export default defineConfig({
         // 设置 https 代理
         proxy: {
             '/api': {
-                target: 'https://kunpeng.csdn.net',
+                target: 'https://www.fastmock.site/mock/c0cd9f5551d17687d29c457725fb87a2',
                 changeOrigin: true,
                 rewrite: (path: string) => path.replace(/^\/api/, '')
             }

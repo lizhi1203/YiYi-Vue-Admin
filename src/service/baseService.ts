@@ -6,14 +6,14 @@ import { Method } from 'axios';
  * 常用CRUD
  */
 export default {
-  delete(path: string, params?: IObject): Promise<IHttpResponse> {
+  delete<T>(path: string, params?: IObject): Promise<IHttpResponse<T>> {
     return http({
       url: path,
       data: params,
       method: 'DELETE'
     })
   },
-  get(path: string, params?: IObject, headers?: IObject): Promise<IHttpResponse> {
+  get<T>(path: string, params?: IObject, headers?: IObject): Promise<IHttpResponse<T>> {
     return new Promise((resolve, reject) => {
       http({
         url: path,
@@ -29,7 +29,7 @@ export default {
         });
     });
   },
-  put(path: string, params?: IObject, headers?: IObject): Promise<IHttpResponse> {
+  put<T>(path: string, params?: IObject, headers?: IObject): Promise<IHttpResponse<T>> {
    return http({
     url: path,
     data: params,
@@ -40,7 +40,7 @@ export default {
     method: 'PUT'
    })
   },
-  post(path: string, body?: IObject, headers?: IObject): Promise<IHttpResponse> {
+  post<T>(path: string, body?: IObject, headers?: IObject): Promise<IHttpResponse<T>> {
     return http({
       url: path,
       data: body,
@@ -51,12 +51,12 @@ export default {
       method: 'POST'
     })
   },
-  download(
+  download<T>(
     path: string,
     params?: IObject,
     filename?: string,
     method: Method = 'GET'
-  ): Promise<IHttpResponse> {
+  ): Promise<IHttpResponse<T>> {
     const opt: any = {url: path, params, method, reponseType: 'blob'};
     if (method.toUpperCase() === 'POST') {
       opt.data = params;

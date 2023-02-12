@@ -10,7 +10,7 @@ export namespace Table {
     searchParam: {
       [key: string]: any;
     };
-    searhInitParam: {
+    searchInitParam: {
       [key: string]: any;
     };
     totalParam: {

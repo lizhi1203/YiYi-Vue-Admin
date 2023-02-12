@@ -6,10 +6,10 @@ export interface IObject<T = any> {
   [key: string]: T;
 }
 
-export interface IHttpResponse extends IObject {
+export interface IHttpResponse<T> extends IObject {
   code: number;
   msg: string;
-  data: any;
+  data: T;
 }
 
 export interface IViewHooksOptions {

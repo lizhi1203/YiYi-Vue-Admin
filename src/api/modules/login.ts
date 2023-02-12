@@ -1,6 +1,8 @@
 import AuthButtons from "@/assets/json/authButtons.json";
 import DynamicRouter from "@/assets/json/dynamicRouter.json";
 import { Login } from "../interface";
+import { PORT1 } from '@/api/config/servicePort';
+import baseService from '@/service/baseService';
 
 export const getAuthButtonListApi = () => {
   return AuthButtons
@@ -11,9 +13,5 @@ export const getAuthMenuListApi = () => {
 }
 
 export const loginApi = (loginForm: Login.ReqLoginForm) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({"code":200,"data":{"access_token":"bqddxxwqmfncffacvbpkuxvwvqrhln"},"msg":"成功"})
-    }, 2000)
-  })
+  return baseService.post<Login.ResLogin>(PORT1 + "/login", loginForm);
 }
