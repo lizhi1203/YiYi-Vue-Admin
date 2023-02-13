@@ -32,7 +32,7 @@ export interface SearchProps {
 export interface ColumnProps<T = any> extends Partial<Omit<TableColumnCtx<T>, "children" | "renderHeader" | "renderCell">> {
   tag?: boolean;
   isShow?: boolean;
-  search?: SearchType | undefined;
+  search?: SearchProps | undefined;
   enum?: EnumProps | ((params?: any) => Promise<any>);
   isFilterEnum?: boolean;
   fieldNames?: { label: string; value: string };

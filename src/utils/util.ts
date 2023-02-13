@@ -31,3 +31,9 @@ export function getTimeState() {
 	if (hours >= 18 && hours <= 24) return `晚上好 🌛`;
 	if (hours >= 0 && hours <= 6) return `凌晨好 🌛`;
 }
+
+export function handleProp(prop: string) {
+  const propArr = prop.split(".");
+  if (propArr.length === 1) return prop;
+  return propArr[propArr.length - 1];
+}

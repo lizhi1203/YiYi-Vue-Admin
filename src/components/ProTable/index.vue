@@ -1,11 +1,9 @@
 <template>
-  <div>
-    表格
-  </div>
+  <SearchForm></SearchForm>
 </template>
 
-<script setup>
-
+<script setup lang="ts">
+import SearchForm from '../SearchForm/index.vue'
 </script>
 
 <style lang="scss" scoped>
