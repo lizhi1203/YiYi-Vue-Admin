@@ -8,27 +8,28 @@
       </template>
       <div class="operation">
         <el-button type="primary" :icon="Search" @click="search">搜索</el-button>
-        <el-button :icon="Delete" @click="clear">重置</el-button>
+        <el-button :icon="Delete" @click="reset">重置</el-button>
       </div>
     </el-form>
   </div>
 </template>
 
 <script setup lang="ts" name="SearchForm">
-import SearchFormItem from './components/SearchFormItem/index.vue'
+import SearchFormItem from './components/SearchFormItem.vue'
 import { ColumnProps } from '../ProTable/interface/index'
 
 interface PropTableProps {
   columns?: ColumnProps[];
   searchParam?: { [key: string]: any },
   search: (params: any) => void;
-  clear: (params: any) => void;
+  reset: (params: any) => void;
 }
 
 const props = withDefaults(defineProps<PropTableProps>(), {
   columns: () => [],
   searchParam: () => ({})
-})
+});
+
 </script>
 
 <style scoped>

@@ -10,3 +10,23 @@ export namespace Login {
     [key: string]: string[]
   }
 }
+
+export namespace User {
+  export interface ResUserList {
+		id: string;
+		username: string;
+		gender: string;
+		user: {
+			detail: {
+				age: number;
+			};
+		};
+		idCard: string;
+		email: string;
+		address: string;
+		createTime: string;
+		status: number;
+		avatar: string;
+		children?: ResUserList[];
+	}
+}
