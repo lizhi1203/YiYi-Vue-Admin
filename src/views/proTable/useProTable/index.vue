@@ -4,8 +4,8 @@
       ref="proTable"
       :columns="columns"
       :requestApi="getTableList"
-      initParam="initParam"
-      dataCallback="dataCallback"
+      :initParam="initParam"
+      :dataCallback="dataCallback"
     >
     </ProTable>
   </div>
