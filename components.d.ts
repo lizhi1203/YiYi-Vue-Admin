@@ -28,6 +28,8 @@ declare module '@vue/runtime-core' {
     Rate: typeof import('./src/components/Rate.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchForm: typeof import('./src/components/SearchForm/index.vue')['default']
+    SearchFormItem: typeof import('./src/components/SearchForm/components/SearchFormItem.vue')['default']
     UsePinia: typeof import('./src/components/usePinia.vue')['default']
   }
 }
