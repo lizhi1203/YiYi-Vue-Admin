@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts" name="SearchFormItem">
-import { computed } from 'vue'
+import { computed, inject, ref } from 'vue'
 import { handleProp } from '@/utils/util'
 import { ColumnProps } from '@/components/ProTable/interface/index'
 interface SearchFormItem {
@@ -58,8 +58,11 @@ const handleSearchProps = computed(() => {
   return handleProps;
 })
 
+const enumMap = inject("enumMap", ref(new Map()));
 const columnEnum = computed(() => {
-  return [];
+  let enumData = enumMap.value.get(props.column.prop);
+  if (!enumData) return[];
+  return enumData;
 })
 
 const placeholder = computed(() => {

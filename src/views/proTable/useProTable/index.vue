@@ -2,6 +2,7 @@
   <div class="table-box">
     <ProTable
       ref="proTable"
+      title="用户列表"
       :columns="columns"
       :requestApi="getTableList"
       :initParam="initParam"
@@ -16,7 +17,10 @@ import { reactive } from 'vue';
 import ProTable from '@/components/ProTable/index.vue';
 import { ColumnProps } from '@/components/ProTable/interface/index';
 import { ElMessage } from 'element-plus';
-import { getUserList } from '@/api/modules/user';
+import { 
+  getUserList,
+  getUserGender
+} from '@/api/modules/user';
 
 const initParam = reactive({
   type: 1
@@ -51,7 +55,18 @@ const columns: ColumnProps[] = [
         </el-button>
       )
     }
-  }
+  },
+  {
+    prop: 'gender',
+    label: '姓别',
+    enum: getUserGender,
+    search: { el: 'select', props: { filterable: true } },
+    fieldNames: { label: 'genderLabel', value: 'genderLabel' }
+  },
+  { prop: 'user.detail.age', label: '年龄', search: { el: 'input' } },
+  { prop: 'idCard', label: '身份证号', search: { el: 'input' } },
+  { prop: 'email', label: '邮箱' },
+  { prop: 'address', label: '居住地址' }
 ]
 </script>
 
