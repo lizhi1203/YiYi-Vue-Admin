@@ -5,6 +5,18 @@
     :columns="searchColumns"
     :searchParam="searchParam"
   ></SearchForm>
+  <el-table
+    v-bind="$attr"
+    :data="tableData"
+  >
+    <template v-for="item in tableColumns" :key="item">
+      <el-table-column
+        v-bind="item"
+        v-if="item.type == 'selection' || item.type == 'index'"
+      >
+      </el-table-column>
+    </template>
+  </el-table>
 </template>
 
 <script setup lang="ts" name="ProTable">
@@ -60,7 +72,13 @@ const flatColumnsFunc = (columns: ColumnProps[], flatArr: ColumnProps[] = []) =>
 
 const flatColumns = ref<ColumnProps[]>();
 flatColumns.value = flatColumnsFunc(tableColumns.value)
+// 过滤需要搜索的配置项
 const searchColumns = flatColumns.value.filter(item => item.search?.el)
+searchColumns.forEach((column, index) => {
+  if (column.search?.defaultValue !== undefined && column.search?.defaultValue !== null) {
+    searchInitParam.value[column.search.key ?? handleProp(column.prop!)] = column.search?.defaultValue;
+  }
+})
 </script>
 
 <style lang="scss" scoped>

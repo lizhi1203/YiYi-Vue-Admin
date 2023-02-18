@@ -17,9 +17,11 @@ import { reactive } from 'vue';
 import ProTable from '@/components/ProTable/index.vue';
 import { ColumnProps } from '@/components/ProTable/interface/index';
 import { ElMessage } from 'element-plus';
+import { User } from '@/api/interface/index'
 import { 
   getUserList,
-  getUserGender
+  getUserGender,
+  getUserStatus
 } from '@/api/modules/user';
 
 const initParam = reactive({
@@ -66,7 +68,44 @@ const columns: ColumnProps[] = [
   { prop: 'user.detail.age', label: '年龄', search: { el: 'input' } },
   { prop: 'idCard', label: '身份证号', search: { el: 'input' } },
   { prop: 'email', label: '邮箱' },
-  { prop: 'address', label: '居住地址' }
+  { prop: 'address', label: '居住地址' },
+  {
+    prop: 'status',
+    label: '用户状态',
+    enum: getUserStatus,
+    search: { el: 'select', props: { filterable: true } },
+    fieldNames: { label: 'userLabel', value: 'userStatus' },
+    render: (scope: { row: User.ResUserList }) => {
+      return (
+        <>
+          <el-switch
+            model-value={scope.row.status}
+            active-text={scope.row.status ? '启用' : '禁用' }
+            active-value={1}
+            inactive-value={0}
+            onClick={() => ElMessage.success('开发中...') }
+          >
+          </el-switch>
+        </>
+      )
+    }
+  },
+  {
+    prop: 'createTime',
+    label: '创建时间',
+    width: 180,
+    search: {
+      el: 'date-picker',
+      props: { type: 'datetimerange', valueFormat: 'YYYY-MM-DD HH:mm:ss'},
+      defaultValue: ["2022-11-12 11:35:00", "2022-12-12 11:35:00"]
+    }
+  },
+  {
+    prop: 'operation',
+    label: '操作',
+    fixed: 'right',
+    width: 330
+  }
 ]
 </script>
 

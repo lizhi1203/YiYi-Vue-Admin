@@ -15,6 +15,7 @@ export const useTable = (
       total: 0
     },
     searchParam: {},
+    // 设置搜索表单项的默认值
     searchInitParam: {},
     totalParam: {}
   });
@@ -44,6 +45,7 @@ export const useTable = (
   const reset = () => {
     state.pageable.pageNum = 1;
     state.searchParam = {};
+    // 重置搜索表单的时，如果有默认搜索参数，则重置默认的搜索参数
     Object.keys(state.searchInitParam).forEach(key => {
       state.searchParam[key] = state.searchInitParam[key]
     })
