@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import './style.css'
+import './styles/reset.scss'
 import ElementPlus from 'element-plus'
 import * as Icons from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'

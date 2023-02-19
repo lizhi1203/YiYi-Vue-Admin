@@ -5,18 +5,42 @@
     :columns="searchColumns"
     :searchParam="searchParam"
   ></SearchForm>
-  <el-table
-    v-bind="$attr"
-    :data="tableData"
-  >
-    <template v-for="item in tableColumns" :key="item">
-      <el-table-column
-        v-bind="item"
-        v-if="item.type == 'selection' || item.type == 'index'"
-      >
-      </el-table-column>
-    </template>
-  </el-table>
+  <div class="card table-main">
+    <div class="table-header">
+      <div class="header-button-lf">
+        <slot name="tableHeader" />
+      </div>
+      <div class="header-button-ri">
+        <el-button :icon="Refresh" circle></el-button>
+        <el-button :icon="Printer" circle v-if="columns.length"></el-button>
+        <el-button :icon="Operation" circle v-if="columns.length"></el-button>
+        <el-button :icon="Search" circle v-if="searchParam.length"></el-button>
+      </div>
+    </div>
+    <el-table
+      v-bind="$attr"
+      :data="tableData"
+    >
+      <slot></slot>
+      <template v-for="item in tableColumns" :key="item">
+        <el-table-column
+          v-bind="item"
+          :align="item.align ?? 'center'"
+          v-if="item.type == 'selection' || item.type == 'index'"
+        >
+        </el-table-column>
+        <el-table-column v-if="item.type == 'expand'" v-bind="item" :align="item.align ?? 'center'" v-slot="scope">
+					<component :is="item.render" :row="scope.row" v-if="item.render"> </component>
+					<slot :name="item.type" :row="scope.row" v-else></slot>
+				</el-table-column>
+        <TableColumn v-if="!item.type && item.prop && item.isShow" :column="item">
+          <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+            <slot :name="slot" :row="scope.row"></slot>
+          </template>
+        </TableColumn>
+      </template>
+    </el-table>
+  </div>
 </template>
 
 <script setup lang="ts" name="ProTable">
@@ -25,7 +49,9 @@ import { TableProps } from 'element-plus';
 import { ColumnProps } from './interface/index'
 import { useTable } from '@/hooks/useTable'
 import SearchForm from '../SearchForm/index.vue'
+import TableColumn from './components/TableColumn.vue'
 import { handleProp } from "@/utils/util";
+import { Refresh, Printer, Operation, Search } from "@element-plus/icons-vue";
 
 interface ProTableProps extends Partial<Omit<TableProps<any>, "data">> {
   columns: ColumnProps[];
@@ -52,7 +78,6 @@ const { tableData, pageable, searchParam, searchInitParam, getTableList, search,
   useTable(props.requestApi, props.initParam, props.pagination, props.dataCallback);
 
 const tableColumns = ref<ColumnProps[]>(props.columns);
-
 const enumMap = ref(new Map<string, { [key: string]: any }>())
 provide("enumMap", enumMap);
 const setEnumMap = async(col: ColumnProps) => {
@@ -64,6 +89,7 @@ const setEnumMap = async(col: ColumnProps) => {
 const flatColumnsFunc = (columns: ColumnProps[], flatArr: ColumnProps[] = []) => {
   columns.forEach(col => {
     if (col._children?.length) flatArr.push(...flatColumnsFunc(col._children));
+    col.isShow = col.isShow ?? true;
     flatArr.push(col);
     setEnumMap(col)
   });
