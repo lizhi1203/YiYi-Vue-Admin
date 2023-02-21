@@ -58,7 +58,7 @@ function getRequestIdentify(config: AxiosRequestConfig) {
   return encodeURIComponent(config.url + qs.stringify(config.params, {addQueryPrefix: true}))
 }
 
-export default (o: AxiosRequestConfig): Promise<IHttpResponse<T>> => {
+export default <T>(o: AxiosRequestConfig): Promise<IHttpResponse<T>> => {
   const key = getRequestIdentify(o);
   // 防止重复请求
   if (requestPending[key]) {
