@@ -2,8 +2,8 @@ import { IHttpResponse, IObject } from "@/types/interface";
 import router from "@/router";
 import axios, { AxiosRequestConfig } from "axios";
 import qs from "qs";
-import app from '@/constants/app'
-// import { getCache, getToken } from "./cache";
+import app from '@/constants/app';
+import { GlobalStore } from '@/stores';
 
 const requestPending: IObject = {}
 const http = axios.create({
@@ -12,14 +12,17 @@ const http = axios.create({
 });
 
 http.interceptors.request.use(
-  function (config) {
-    // const token = getToken();
-    // if (token) {
-    //   config.headers["Authorization"] = "Bearer " + token;
-    // }
+  (config) => {
+    const globalStore = GlobalStore();
+    const token = globalStore.token;
+    if (token) {
+      config.headers!["Authorization"] = "Bearer " + token;
+    }
+    // 防止get缓存导致获取不到最新数据
     if (config.method?.toUpperCase() === "GET") {
       config.params = { ...config.params, _t: new Date().getTime() };
     }
+    // form表单默认格式请求头，数据需要使用qs转码
     if (Object.values(config.headers || {}).includes("application/x-www-form-urlencoded")) {
       config.data = qs.stringify(config.data);
     }
@@ -31,6 +34,7 @@ http.interceptors.request.use(
 );
 http.interceptors.response.use(
   (response) => {
+    // 当前请求需要用户验证
     if (response.data.code === 401) {
       //自定义业务状态码
       redirectLogin();
@@ -54,18 +58,19 @@ function getRequestIdentify(config: AxiosRequestConfig) {
   return encodeURIComponent(config.url + qs.stringify(config.params, {addQueryPrefix: true}))
 }
 
-export default (o: AxiosRequestConfig): Promise<IHttpResponse> => {
+export default (o: AxiosRequestConfig): Promise<IHttpResponse<T>> => {
   const key = getRequestIdentify(o);
+  // 防止重复请求
   if (requestPending[key]) {
     return Promise.reject("-999");
   } else {
     requestPending[key] = 1;
   }
-  return new Promise((resolve, reject) => {
+  return new Promise<IHttpResponse<T>>((resolve, reject) => {
     http(o)
       .then((res) => {
         return resolve(res.data);
       })
       .catch(reject);
   });
-};
+}
