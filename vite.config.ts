@@ -1,22 +1,28 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import * as path from 'path';
+import { resolve } from 'path';
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
     resolve: {
         //设置别名
         alias: {
-            '@': path.resolve(__dirname, 'src')
+            '@': resolve(__dirname, 'src')
         }
     },
     plugins: [
         vue(),
         vueJsx(),
+        createSvgIconsPlugin({
+            iconDirs: [resolve(process.cwd(), "src/assets/icons")],
+            symbolId: 'icon-[dir]-[name]'
+        }),
         AutoImport({
             resolvers: [ElementPlusResolver()],
         }),

@@ -31,6 +31,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     SearchForm: typeof import('./src/components/SearchForm/index.vue')['default']
     SearchFormItem: typeof import('./src/components/SearchForm/components/SearchFormItem.vue')['default']
+    SvgIcon: typeof import('./src/components/SvgIcon/index.vue')['default']
     TableColumn: typeof import('./src/components/ProTable/components/TableColumn.vue')['default']
     UsePinia: typeof import('./src/components/usePinia.vue')['default']
   }

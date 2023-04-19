@@ -9,6 +9,7 @@ import App from './App.vue'
 import store from './stores'
 import router from '@/router'
 import directives from './directives'
+import 'virtual:svg-icons-register'
 
 window.onerror = function(e) {
   console.log(['https://stackoverflow.com/search?q=[js]+' + e])
