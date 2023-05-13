@@ -77,6 +77,7 @@ const dataCallback = (data: any) => {
   }
 }
 
+// 定义表格配置项(如果该列可搜索，指定列的search配置el字段指定搜索框的类型)
 const columns: ColumnProps[] = [
   { type: 'selection', fixed: 'left', width: 80 },
   { type: 'index', label: '#', width: 80 },
