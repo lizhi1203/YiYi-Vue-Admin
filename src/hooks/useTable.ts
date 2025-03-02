@@ -33,13 +33,13 @@ export const useTable = (
   });
 
   onMounted(() => {
-    reset()
+    reset();
   })
 
   const search = () => {
     state.pageable.pageNum = 1;
-    updatedTotalParam()
-    getTableList()
+    updatedTotalParam();
+    getTableList();
   }
 
   const reset = () => {
