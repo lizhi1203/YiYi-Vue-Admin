@@ -70,10 +70,10 @@ export const useTable = (
       let { data } = await api(state.totalParam);
       dataCallback && ( data = dataCallback(data));
       state.tableData = isPageable ? data.list : data;
-      const { pageNum, pageSize, total } = data
-      isPageable && updatePageable({ pageNum, pageSize, total })
+      const { pageNum, pageSize, total } = data;
+      isPageable && updatePageable({ pageNum, pageSize, total });
     } catch(error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
