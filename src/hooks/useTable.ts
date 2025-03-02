@@ -49,26 +49,26 @@ export const useTable = (
     Object.keys(state.searchInitParam).forEach(key => {
       state.searchParam[key] = state.searchInitParam[key]
     })
-    updatedTotalParam()
-    getTableList()
+    updatedTotalParam();
+    getTableList();
   }
 
   const updatedTotalParam = () => {
-    state.totalParam = {}
-    let nowSearchParam: {[key: string]: any} = {}
+    state.totalParam = {};
+    let nowSearchParam: {[key: string]: any} = {};
     for (let key in state.searchParam) {
       if (state.searchParam[key] || state.searchParam[key] === false || state.searchParam[key] === 0) {
-        nowSearchParam[key] = state.searchParam[key]
+        nowSearchParam[key] = state.searchParam[key];
       }
     }
-    Object.assign(state.totalParam, nowSearchParam, isPageable ? pageParam.value : {})
+    Object.assign(state.totalParam, nowSearchParam, isPageable ? pageParam.value : {});
   }
 
   const getTableList = async() => {
     try {
-      Object.assign(state.totalParam, initParam, isPageable ? pageParam.value : {})
-      let { data } = await api(state.totalParam)
-      dataCallback && ( data = dataCallback(data))
+      Object.assign(state.totalParam, initParam, isPageable ? pageParam.value : {});
+      let { data } = await api(state.totalParam);
+      dataCallback && ( data = dataCallback(data));
       state.tableData = isPageable ? data.list : data;
       const { pageNum, pageSize, total } = data
       isPageable && updatePageable({ pageNum, pageSize, total })
