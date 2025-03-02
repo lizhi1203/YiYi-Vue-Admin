@@ -66,6 +66,7 @@ export const useTable = (
 
   const getTableList = async() => {
     try {
+      
       Object.assign(state.totalParam, initParam, isPageable ? pageParam.value : {});
       let { data } = await api(state.totalParam);
       dataCallback && ( data = dataCallback(data));
@@ -73,7 +74,7 @@ export const useTable = (
       const { pageNum, pageSize, total } = data;
       isPageable && updatePageable({ pageNum, pageSize, total });
     } catch(error) {
-      console.log(error);
+      console.log("getTableList error", error)
     }
   }
 
