@@ -46,10 +46,10 @@
 <script setup lang="ts" name="ProTable">
 import { ref, provide } from 'vue';
 import { TableProps } from 'element-plus';
-import { ColumnProps } from './interface/index'
-import { useTable } from '@/hooks/useTable'
-import SearchForm from '../SearchForm/index.vue'
-import TableColumn from './components/TableColumn.vue'
+import { ColumnProps } from './interface/index';
+import { useTable } from '@/hooks/useTable';
+import SearchForm from '../SearchForm/index.vue';
+import TableColumn from './components/TableColumn.vue';
 import { handleProp } from "@/utils/util";
 import { Refresh, Printer, Operation, Search } from "@element-plus/icons-vue";
 
@@ -78,7 +78,7 @@ const { tableData, pageable, searchParam, searchInitParam, getTableList, search,
   useTable(props.requestApi, props.initParam, props.pagination, props.dataCallback);
 
 const tableColumns = ref<ColumnProps[]>(props.columns);
-const enumMap = ref(new Map<string, { [key: string]: any }>())
+const enumMap = ref(new Map<string, { [key: string]: any }>());
 provide("enumMap", enumMap);
 const setEnumMap = async(col: ColumnProps) => {
   if (!col.enum) return;
